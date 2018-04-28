@@ -1,5 +1,23 @@
 # 插件文件夹
 
+## 目前仅有 nativePlugin.js 插件
+
+## HOW TO USE
+
+```javascript
+// main.js
+
+import Vue from 'vue'
+import nativeAPIPlugin from '@/plugins/nativePlugin'
+
+// 请在生产环境中开启使用原生插件
+if (process.env.NODE_ENV === 'production') {
+  Vue.use(nativeAPIPlugin, {
+    platform: true
+  })
+}
+```
+
 ## DONE
 
 * vue 插件化
