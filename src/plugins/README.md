@@ -18,6 +18,14 @@ if (process.env.NODE_ENV === 'production') {
 }
 ```
 
+```xml
+<!-- in js file which need IntelliSense should add follow code -->
+<!-- relative/path/to means relativepath to plugins/nativePlugin.d.ts, does not just mean what show there -->
+<!-- 在需要智能提示的文件的js头部加入以下内容 -->
+
+/// <reference path="relative/path/to/plugins/nativePlugin.d.ts"/>
+```
+
 ## DONE
 
 * vue 插件化

@@ -52,31 +52,32 @@ export default class UI {
   /**
    * 设置页面左边菜单,设置title的左键Item
    *
-   * @param {menuitem} menuitem 页面左键的内容数组
+   * @param {Menuitem} Menuitem 页面左键的内容数组
    * @param {Function} successCallback 成功回调
    * @param {Function} errorCallback 失败回调
    * @memberof UI
    */
-  setLeftItem(menuitem, successCallback, errorCallback) {
+  setLeftItem(Menuitem, successCallback, errorCallback) {
     if (window.x_ui) {
-      window.x_ui.setLeftItem(successCallback, errorCallback, menuitem)
+      window.x_ui.setLeftItem(successCallback, errorCallback, Menuitem)
     }
   }
   /**
-   * 设置title的右键菜单
+   * 设置title的右侧菜单
    *
-   * @param {menuitem} menuitem 页面右键的内容数组
+   * @param {Menuitem} Menuitem 页面右键的内容数组
    * @param {Function} successCallback 成功回调
    * @param {Function} errorCallback 失败回调
    * @memberof UI
    */
-  setRightItem(menuitem, successCallback, errorCallback) {
+  setRightItem(Menuitem, successCallback, errorCallback) {
+    let Menuitemstr = JSON.stringify(Menuitem)
     if (window.x_ui) {
-      window.x_ui.setRightItem(successCallback, errorCallback, menuitem)
+      window.x_ui.setRightItem(successCallback, errorCallback, Menuitemstr)
     }
   }
   /**
-   * 移除title的右键菜单
+   * 移除title的右侧菜单
    *
    * @param {Function} successCallback 成功回调
    * @param {Function} errorCallback 失败回调
@@ -92,7 +93,7 @@ export default class UI {
    * 弹出式菜单,默认底部添加取消选项. 当用户选择时返回value值,用户取消以usercancel的方式failureCallback返回
    *
    * @param {string} title 顶部的提示性文字
-   * @param {label[]} labels 菜单内容数组
+   * @param {Label[]} labels 菜单内容数组
    * @param {function(string)} successCallback 成功回调
    * 传入参数为 用户选中的label的value值
    * @param {errorFuntion} errorCallback 失败回调
@@ -106,7 +107,7 @@ export default class UI {
   /**
    * 时间轮子选择器.当用户选择时返回value值,用户取消以usercancel的方式failureCallback返回
    *
-   * @param {label[]} labels 菜单内容数组
+   * @param {Label[]} labels 菜单内容数组
    * @param {function(string)} successCallback 成功回调
    * 传入参数为 用户选中的label的value值
    * @param {errorFuntion} errorCallback 失败回调
@@ -197,13 +198,13 @@ export default class UI {
   }
 }
 
-export class menuitem {
+export class Menuitem {
   /**
    * 菜单项
-   * @param {string} menuid 菜单id，如“1”
+   * @param {number} menuid 菜单id，如 1
    * @param {string} menutext 菜单显示文字,如"公交“
    * @param {string} menuicon 菜单显示icon，如"bus”
-   * @memberof menuitem
+   * @memberof Menuitem
    */
   constructor(menuid, menutext, menuicon) {
     this.menuid = menuid
@@ -211,13 +212,13 @@ export class menuitem {
     this.menuicon = menuicon
   }
 }
-export class label {
+export class Label {
   /**
    * 标签
    * @param {string} value 选项值,选取后底层返回
    * @param {string} label 选项名称,用于展示
    * @param {number} selected 是否默认选中,为1时默认选中
-   * @memberof label
+   * @memberof Label
    */
   constructor(value, label, selected) {
     this.value = value
