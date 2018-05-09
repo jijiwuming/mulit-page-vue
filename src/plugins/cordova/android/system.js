@@ -1,4 +1,11 @@
 export default class System {
+  constructor() {
+    if (window.x_system) {
+      console.log('SystemPluginReady')
+    } else {
+      return Object.create(null)
+    }
+  }
   /**
    * 获取设备信息
    *
@@ -8,9 +15,7 @@ export default class System {
    * @memberof System
    */
   getDeviceInfo(successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.getDeviceInfo(successCallback, errorCallback)
-    }
+    window.x_system.getDeviceInfo(successCallback, errorCallback)
   }
   /**
    * 获取系统版本号
@@ -21,9 +26,7 @@ export default class System {
    * @memberof System
    */
   getOSVersion(successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.getOSVersion(successCallback, errorCallback)
-    }
+    window.x_system.getOSVersion(successCallback, errorCallback)
   }
   /**
    * 获取网络接入方式.
@@ -34,9 +37,7 @@ export default class System {
    * @memberof System
    */
   getNetworkType(successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.getNetworkType(successCallback, errorCallback)
-    }
+    window.x_system.getNetworkType(successCallback, errorCallback)
   }
   /**
    * 获取个推的PushCID
@@ -47,9 +48,7 @@ export default class System {
    * @memberof System
    */
   getPushCID(successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.getPushCID(successCallback, errorCallback)
-    }
+    window.x_system.getPushCID(successCallback, errorCallback)
   }
   /**
    * 清空缓存
@@ -59,9 +58,7 @@ export default class System {
    * @memberof System
    */
   cleanCache(successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.cleanCache(successCallback, errorCallback)
-    }
+    window.x_system.cleanCache(successCallback, errorCallback)
   }
   /**
    * 弹出照片选择器
@@ -75,16 +72,13 @@ export default class System {
    * @memberof System
    */
   photoPicker(maxSelec, width, height, successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.photoPicker(
-        successCallback,
-        errorCallback,
-        maxSelec,
-        width,
-        height
-      )
-    }
-    successCallback()
+    window.x_system.photoPicker(
+      successCallback,
+      errorCallback,
+      maxSelec,
+      width,
+      height
+    )
   }
   /**
    * 弹出省份与城市选择器
@@ -96,9 +90,7 @@ export default class System {
    * @memberof System
    */
   addressPicker(selectcode, successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.addressPicker(successCallback, errorCallback, selectcode)
-    }
+    window.x_system.addressPicker(successCallback, errorCallback, selectcode)
   }
   /**
    * 调高屏幕亮度
@@ -108,9 +100,7 @@ export default class System {
    * @memberof System
    */
   improveBrightness(successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.improveBrightness(successCallback, errorCallback)
-    }
+    window.x_system.improveBrightness(successCallback, errorCallback)
   }
   /**
    * 恢复屏幕亮度
@@ -120,9 +110,7 @@ export default class System {
    * @memberof System
    */
   resetBrightness(successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.resetBrightness(successCallback, errorCallback)
-    }
+    window.x_system.resetBrightness(successCallback, errorCallback)
   }
   /**
    * 自动设置屏幕亮度
@@ -133,9 +121,7 @@ export default class System {
    * @memberof System
    */
   setAutoBrightness(auto, successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.setAutoBrightness(successCallback, errorCallback, auto)
-    }
+    window.x_system.setAutoBrightness(successCallback, errorCallback, auto)
   }
   /**
    * 设置屏幕亮度
@@ -146,13 +132,11 @@ export default class System {
    * @memberof System
    */
   setWindowsBrightness(brightness, successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.setWindowsBrightness(
-        successCallback,
-        errorCallback,
-        brightness
-      )
-    }
+    window.x_system.setWindowsBrightness(
+      successCallback,
+      errorCallback,
+      brightness
+    )
   }
   /**
    * 获取屏幕亮度值
@@ -163,9 +147,7 @@ export default class System {
    * @memberof System
    */
   getWindowsBrightness(successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.getWindowsBrightness(successCallback, errorCallback)
-    }
+    window.x_system.getWindowsBrightness(successCallback, errorCallback)
   }
   /**
    * 判断是否开启自动亮度
@@ -175,9 +157,7 @@ export default class System {
    * @memberof System
    */
   isAutoBrightness(successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.isAutoBrightness(successCallback, errorCallback)
-    }
+    window.x_system.isAutoBrightness(successCallback, errorCallback)
   }
   /**
    * 注册Push监听事件
@@ -189,14 +169,12 @@ export default class System {
    * @memberof System
    */
   registerPushListener(messageId, callback, successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.registerPushListener(
-        successCallback,
-        errorCallback,
-        messageId,
-        callback
-      )
-    }
+    window.x_system.registerPushListener(
+      successCallback,
+      errorCallback,
+      messageId,
+      callback
+    )
   }
   /**
    * 取消Push监听事件
@@ -207,12 +185,10 @@ export default class System {
    * @memberof System
    */
   unRegisterPushListener(messageId, successCallback, errorCallback) {
-    if (window.x_system) {
-      window.x_system.unRegisterPushListener(
-        successCallback,
-        errorCallback,
-        messageId
-      )
-    }
+    window.x_system.unRegisterPushListener(
+      successCallback,
+      errorCallback,
+      messageId
+    )
   }
 }

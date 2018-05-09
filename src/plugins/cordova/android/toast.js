@@ -1,6 +1,13 @@
 /* eslint-disable no-undef */
 /* eslint-disable camelcase */
 export default class Toast {
+  constructor() {
+    if (window.x_toast) {
+      console.log('ToastPluginReady')
+    } else {
+      return Object.create(null)
+    }
+  }
   /**
    * toast显示[全参数自行配置]
    *
@@ -11,15 +18,13 @@ export default class Toast {
    * @param {Function} errorCallback 失败回调
    */
   show(message, duration, position, successCallback, errorCallback) {
-    if (window.x_toast) {
-      window.x_toast.show(
-        message,
-        duration,
-        position,
-        successCallback,
-        errorCallback
-      )
-    }
+    window.x_toast.show(
+      message,
+      duration,
+      position,
+      successCallback,
+      errorCallback
+    )
   }
   /**
    * 顶部短时间显示toast
@@ -29,9 +34,7 @@ export default class Toast {
    * @param {Function} errorCallback 失败回调
    */
   showShortTop(message, successCallback, errorCallback) {
-    if (window.x_toast) {
-      window.x_toast.showShortTop(message, successCallback, errorCallback)
-    }
+    window.x_toast.showShortTop(message, successCallback, errorCallback)
   }
   /**
    * 中部短时间显示Toast
@@ -42,9 +45,7 @@ export default class Toast {
    * @memberof Toast
    */
   showShortCenter(message, successCallback, errorCallback) {
-    if (window.x_toast) {
-      window.x_toast.showShortCenter(message, successCallback, errorCallback)
-    }
+    window.x_toast.showShortCenter(message, successCallback, errorCallback)
   }
   /**
    * 底部短时间显示Toast
@@ -55,9 +56,7 @@ export default class Toast {
    * @memberof Toast
    */
   showShortBottom(message, successCallback, errorCallback) {
-    if (window.x_toast) {
-      window.x_toast.showShortBottom(message, successCallback, errorCallback)
-    }
+    window.x_toast.showShortBottom(message, successCallback, errorCallback)
   }
   /**
    * 顶部长时间显示Toast
@@ -68,9 +67,7 @@ export default class Toast {
    * @memberof Toast
    */
   showLongTop(message, successCallback, errorCallback) {
-    if (window.x_toast) {
-      window.x_toast.showLongTop(message, successCallback, errorCallback)
-    }
+    window.x_toast.showLongTop(message, successCallback, errorCallback)
   }
   /**
    * 中部长时间显示Toast
@@ -81,9 +78,7 @@ export default class Toast {
    * @memberof Toast
    */
   showLongCenter(message, successCallback, errorCallback) {
-    if (window.x_toast) {
-      window.x_toast.showShortBottom(message, successCallback, errorCallback)
-    }
+    window.x_toast.showLongCenter(message, successCallback, errorCallback)
   }
   /**
    * 底部长时间显示Toast
@@ -94,9 +89,7 @@ export default class Toast {
    * @memberof Toast
    */
   showLongBottom(message, successCallback, errorCallback) {
-    if (window.x_toast) {
-      window.x_toast.showLongBottom(message, successCallback, errorCallback)
-    }
+    window.x_toast.showLongBottom(message, successCallback, errorCallback)
   }
   /**
    * 隐藏toast(仅原生可用)
@@ -106,8 +99,6 @@ export default class Toast {
    * @memberof Toast
    */
   hide(successCallback, errorCallback) {
-    if (window.x_toast) {
-      window.x_toast.hide(message, successCallback, errorCallback)
-    }
+    window.x_toast.hide(message, successCallback, errorCallback)
   }
 }

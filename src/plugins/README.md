@@ -2,7 +2,7 @@
 
 ## 目前仅有 nativePlugin.js 插件
 
-## HOW TO USE
+## HOW TO IMPORT
 
 ```javascript
 // main.js
@@ -24,6 +24,24 @@ if (process.env.NODE_ENV === 'production') {
 <!-- 在需要智能提示的文件的js头部加入以下内容 -->
 
 /// <reference path="relative/path/to/plugins/nativePlugin.d.ts"/>
+```
+
+## USE EXAMPLE
+
+```javascript
+// vue中
+
+export default {
+  mounted: function() {
+    // 调用System插件,由于需要等待deviceready事件，此处$System为一个Promise对象
+    this.$System.then(system => {
+      // 此处的system即为注入的插件对象，之后直接调用方法即可
+      system.getDeviceInfo(str => {
+        console.log(str)
+      })
+    })
+  }
+}
 ```
 
 ## DONE

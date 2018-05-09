@@ -5,9 +5,9 @@ import Thirdparty from './cordova/android/thirdparty'
 import UI from './cordova/android/ui'
 declare module 'vue/types/vue' {
   interface Vue {
-    $Toast: Toast
-    $System: System
-    $Thirdparty: Thirdparty
-    $UI: UI
+    $Toast: Promise<Toast>
+    $System: Promise<System>
+    $ThirdParty: Promise<Thirdparty>
+    $UI: Promise<UI>
   }
 }

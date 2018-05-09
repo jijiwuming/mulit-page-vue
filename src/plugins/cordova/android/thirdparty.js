@@ -1,4 +1,11 @@
 export default class Thirdparty {
+  constructor() {
+    if (window.x_thirdparty) {
+      console.log('ThirdpartyPluginReady')
+    } else {
+      return Object.create(null)
+    }
+  }
   /**
    * 调起第三方支付
    *
@@ -9,27 +16,23 @@ export default class Thirdparty {
    * @memberof Thirdparty
    */
   doPayment(payName, payInfo, successCallback, errorCallback) {
-    if (window.x_thirdparty) {
-      window.x_thirdparty.doPayment(
-        successCallback,
-        errorCallback,
-        payName.toUpperCase(),
-        payInfo
-      )
-    }
+    window.x_thirdparty.doPayment(
+      successCallback,
+      errorCallback,
+      payName.toUpperCase(),
+      payInfo
+    )
   }
   /**
    * 获取支持的支付方式
    *
-   * @param {function(JSON[])} successCallback 成功回调
-   * 传入参数为 JSON数组格式, 如 ["WXPAY","ALIPAY"]
+   * @param {function(string)} successCallback 成功回调
+   * 传入参数为 JSON数组的字符串格式, 如 ["WXPAY","ALIPAY"]
    * @param {Function} errorCallback 失败回调
    * @memberof Thirdparty
    */
   getPaymentSupportList(successCallback, errorCallback) {
-    if (window.x_thirdparty) {
-      window.x_thirdparty.getPaymentSupportList(successCallback, errorCallback)
-    }
+    window.x_thirdparty.getPaymentSupportList(successCallback, errorCallback)
   }
   /**
    * 一键分享
@@ -43,16 +46,14 @@ export default class Thirdparty {
    * @memberof Thirdparty
    */
   doOnekeyShare(title, content, picUrl, url, successCallback, errorCallback) {
-    if (window.x_thirdparty) {
-      window.x_thirdparty.doOnekeyShare(
-        successCallback,
-        errorCallback,
-        title,
-        content,
-        picUrl,
-        url
-      )
-    }
+    window.x_thirdparty.doOnekeyShare(
+      successCallback,
+      errorCallback,
+      title,
+      content,
+      picUrl,
+      url
+    )
   }
   /**
    * 授权登录
@@ -69,13 +70,11 @@ export default class Thirdparty {
    * @memberof Thirdparty
    */
   doAuthorizedLogin(thirdPartyName, successCallback, errorCallback) {
-    if (window.x_thirdparty) {
-      window.x_thirdparty.doAuthorizedLogin(
-        successCallback,
-        errorCallback,
-        thirdPartyName
-      )
-    }
+    window.x_thirdparty.doAuthorizedLogin(
+      successCallback,
+      errorCallback,
+      thirdPartyName
+    )
   }
   /**
    * 记录业务数据
@@ -88,15 +87,13 @@ export default class Thirdparty {
    * @memberof Thirdparty
    */
   doRecordEvent(eventId, eventInfo, count, successCallback, errorCallback) {
-    if (window.x_thirdparty) {
-      window.x_thirdparty.doRecordEvent(
-        successCallback,
-        errorCallback,
-        eventId,
-        eventInfo,
-        count
-      )
-    }
+    window.x_thirdparty.doRecordEvent(
+      successCallback,
+      errorCallback,
+      eventId,
+      eventInfo,
+      count
+    )
   }
   /**
    * 显示公交线路信息
@@ -117,15 +114,13 @@ export default class Thirdparty {
     successCallback,
     errorCallback
   ) {
-    if (window.x_thirdparty) {
-      window.x_thirdparty.doMapBusLineShow(
-        successCallback,
-        errorCallback,
-        lineid,
-        direction,
-        longitude,
-        latitude
-      )
-    }
+    window.x_thirdparty.doMapBusLineShow(
+      successCallback,
+      errorCallback,
+      lineid,
+      direction,
+      longitude,
+      latitude
+    )
   }
 }

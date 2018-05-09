@@ -1,5 +1,12 @@
 /// <reference path="./type.d.ts"/>
 export default class UI {
+  constructor() {
+    if (window.x_ui) {
+      console.log('UIPluginReady')
+    } else {
+      return Object.create(null)
+    }
+  }
   /**
    * 显示对话框的函数
    *
@@ -13,16 +20,14 @@ export default class UI {
    * @memberof UI
    */
   showDialog(title, msg, confirm, cancel, successCallback, errorCallback) {
-    if (window.x_ui) {
-      window.x_ui.showDialog(
-        successCallback,
-        errorCallback,
-        title,
-        msg,
-        confirm,
-        cancel
-      )
-    }
+    window.x_ui.showDialog(
+      successCallback,
+      errorCallback,
+      title,
+      msg,
+      confirm,
+      cancel
+    )
   }
   /**
    * 页面刷新结束
@@ -32,9 +37,7 @@ export default class UI {
    * @memberof UI
    */
   onFinishRefresh(successCallback, errorCallback) {
-    if (window.x_ui) {
-      window.x_ui.onFinishRefresh(successCallback, errorCallback)
-    }
+    window.x_ui.onFinishRefresh(successCallback, errorCallback)
   }
   /**
    * 设置title
@@ -45,9 +48,7 @@ export default class UI {
    * @memberof UI
    */
   setTitle(title, successCallback, errorCallback) {
-    if (window.x_ui) {
-      window.x_ui.setTitle(successCallback, errorCallback, title)
-    }
+    window.x_ui.setTitle(successCallback, errorCallback, title)
   }
   /**
    * 设置页面左边菜单,设置title的左键Item
@@ -58,9 +59,9 @@ export default class UI {
    * @memberof UI
    */
   setLeftItem(Menuitem, successCallback, errorCallback) {
-    if (window.x_ui) {
-      window.x_ui.setLeftItem(successCallback, errorCallback, Menuitem)
-    }
+    let Menuitemstr = JSON.stringify(Menuitem)
+
+    window.x_ui.setLeftItem(successCallback, errorCallback, Menuitemstr)
   }
   /**
    * 设置title的右侧菜单
@@ -72,9 +73,8 @@ export default class UI {
    */
   setRightItem(Menuitem, successCallback, errorCallback) {
     let Menuitemstr = JSON.stringify(Menuitem)
-    if (window.x_ui) {
-      window.x_ui.setRightItem(successCallback, errorCallback, Menuitemstr)
-    }
+
+    window.x_ui.setRightItem(successCallback, errorCallback, Menuitemstr)
   }
   /**
    * 移除title的右侧菜单
@@ -84,9 +84,7 @@ export default class UI {
    * @memberof UI
    */
   removeAllRightItem(successCallback, errorCallback) {
-    if (window.x_ui) {
-      window.x_ui.removeAllRightItem(successCallback, errorCallback)
-    }
+    window.x_ui.removeAllRightItem(successCallback, errorCallback)
   }
   // TODO: 检查之前是否有errorFuntion类型
   /**
@@ -100,9 +98,7 @@ export default class UI {
    * @memberof UI
    */
   showActionSheet(title, labels, successCallback, errorCallback) {
-    if (window.x_ui) {
-      window.x_ui.showActionSheet(successCallback, errorCallback, title, labels)
-    }
+    window.x_ui.showActionSheet(successCallback, errorCallback, title, labels)
   }
   /**
    * 时间轮子选择器.当用户选择时返回value值,用户取消以usercancel的方式failureCallback返回
@@ -114,9 +110,7 @@ export default class UI {
    * @memberof UI
    */
   showDatePicker(labels, successCallback, errorCallback) {
-    if (window.x_ui) {
-      window.x_ui.showDatePicker(successCallback, errorCallback, labels)
-    }
+    window.x_ui.showDatePicker(successCallback, errorCallback, labels)
   }
   /**
    * 时间轮子选择器.
@@ -138,15 +132,13 @@ export default class UI {
     successCallback,
     errorCallback
   ) {
-    if (window.x_ui) {
-      window.x_ui.showCustomDatePicker(
-        successCallback,
-        errorCallback,
-        startdate,
-        enddate,
-        defaultdate
-      )
-    }
+    window.x_ui.showCustomDatePicker(
+      successCallback,
+      errorCallback,
+      startdate,
+      enddate,
+      defaultdate
+    )
   }
   /**
    * 设置下拉刷新开关
@@ -157,9 +149,7 @@ export default class UI {
    * @memberof UI
    */
   setRefreshFlag(flag, successCallback, errorCallback) {
-    if (window.x_ui) {
-      window.x_ui.setRefreshFlag(successCallback, errorCallback, flag)
-    }
+    window.x_ui.setRefreshFlag(successCallback, errorCallback, flag)
   }
   /**
    * 重新加载url
@@ -169,9 +159,7 @@ export default class UI {
    * @memberof UI
    */
   reload(successCallback, errorCallback) {
-    if (window.x_ui) {
-      window.x_ui.setRefreshFlag(successCallback, errorCallback)
-    }
+    window.x_ui.reload(successCallback, errorCallback)
   }
   /**
    * 弹出自定义列表选取框，参考支付宝选择支付方式的弹出框
@@ -179,22 +167,21 @@ export default class UI {
    *
    * @param {string} title 显示的标题(必填)
    * @param {string} desc 显示的描述(非必填)
-   * @param {optionItem} options 选项列表(必填)
+   * @param {OptionItem} options 选项列表(必填)
    * @param {function(string)} successCallback 成功回调
    * 传入参数为 用户选中的option的oid值
    * @param {errorFuntion} errorCallback 失败回调
    * @memberof UI
    */
   showOptionPicker(title, desc, options, successCallback, errorCallback) {
-    if (window.x_ui) {
-      window.x_ui.setRefreshFlag(
-        successCallback,
-        errorCallback,
-        title,
-        desc,
-        options
-      )
-    }
+    let optionsStr = JSON.stringify(options)
+    window.x_ui.showOptionPicker(
+      successCallback,
+      errorCallback,
+      title,
+      desc,
+      optionsStr
+    )
   }
 }
 
@@ -226,7 +213,7 @@ export class Label {
     this.selected = selected
   }
 }
-export class optionItem {
+export class OptionItem {
   /**
    * 选项实体
    * 如 "[{\"oid\":\"bus\",\"oname\":\"公交\",\"oimgurl\":\"1.png\",\"selected\":1}
