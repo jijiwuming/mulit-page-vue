@@ -53,27 +53,25 @@ export default class UI {
   /**
    * 设置页面左边菜单,设置title的左键Item
    *
-   * @param {Menuitem} Menuitem 页面左键的内容数组
+   * @param {Menuitem[]} Menuitems 页面左键的内容数组
    * @param {Function} successCallback 成功回调
    * @param {Function} errorCallback 失败回调
    * @memberof UI
    */
-  setLeftItem(Menuitem, successCallback, errorCallback) {
-    let Menuitemstr = JSON.stringify(Menuitem)
-
+  setLeftItem(Menuitems, successCallback, errorCallback) {
+    let Menuitemstr = JSON.stringify(Menuitems)
     window.x_ui.setLeftItem(successCallback, errorCallback, Menuitemstr)
   }
   /**
    * 设置title的右侧菜单
-   *
-   * @param {Menuitem} Menuitem 页面右键的内容数组
+   * 设置window.onMenuSelect作为回调，传入参数为menuid
+   * @param {Menuitem[]} Menuitems 页面右键的内容数组
    * @param {Function} successCallback 成功回调
    * @param {Function} errorCallback 失败回调
    * @memberof UI
    */
-  setRightItem(Menuitem, successCallback, errorCallback) {
-    let Menuitemstr = JSON.stringify(Menuitem)
-
+  setRightItem(Menuitems, successCallback, errorCallback) {
+    let Menuitemstr = JSON.stringify(Menuitems)
     window.x_ui.setRightItem(successCallback, errorCallback, Menuitemstr)
   }
   /**

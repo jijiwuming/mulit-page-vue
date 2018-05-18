@@ -1,4 +1,9 @@
-/build/
-/config/
-/dist/
-/*.js
+/build/**
+/config/**
+/dist/**
+src/components/
+src/modules/example/
+src/modules/linedetail/
+src/modules/searchstation/
+src/modules/ticket-detail/
+src/modules/searchCar/

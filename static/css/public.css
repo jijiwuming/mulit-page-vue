@@ -1,3 +1,17 @@
+div,
+button,
+span,
+a,
+h,
+input,
+textarea,
+select {
+  font-family: Arial, 'Microsoft YaHei';
+}
+/* 消除mescroll列表闪烁问题 */
+[v-cloak] {
+  display: none !important;
+}
 input,
 textarea,
 select {
@@ -24,17 +38,6 @@ img {
   display: block;
   height: 0;
   clear: both;
-}
-
-div,
-button,
-span,
-a,
-h,
-input,
-textarea,
-select {
-  font-family: Arial, 'Microsoft YaHei';
 }
 
 [data-dpr='1'] .fontsize14 {
@@ -145,6 +148,18 @@ select {
   font-size: 51px;
 }
 
+[data-dpr='1'] .fontsize38 {
+  font-size: 19px;
+}
+
+[data-dpr='2'] .fontsize38 {
+  font-size: 38px;
+}
+
+[data-dpr='3'] .fontsize38 {
+  font-size: 57px;
+}
+
 [data-dpr='1'] .fontsize40 {
   font-size: 20px;
 }
@@ -156,6 +171,7 @@ select {
 [data-dpr='3'] .fontsize40 {
   font-size: 60px;
 }
+
 [data-dpr='1'] .fontsize44 {
   font-size: 22px;
 }
@@ -166,6 +182,18 @@ select {
 
 [data-dpr='3'] .fontsize44 {
   font-size: 66px;
+}
+
+[data-dpr='1'] .fontsize50 {
+  font-size: 25px;
+}
+
+[data-dpr='2'] .fontsize50 {
+  font-size: 50px;
+}
+
+[data-dpr='3'] .fontsize50 {
+  font-size: 75px;
 }
 
 [data-dpr='1'] .fontsize80 {
@@ -204,6 +232,18 @@ select {
   line-height: 42px;
 }
 
+[data-dpr='1'] .lineheight30 {
+  line-height: 15px;
+}
+
+[data-dpr='2'] .lineheight30 {
+  line-height: 30px;
+}
+
+[data-dpr='3'] .lineheight30 {
+  line-height: 45px;
+}
+
 [data-dpr='1'] .lineheight33 {
   line-height: 16.5px;
 }
@@ -238,6 +278,18 @@ select {
 
 [data-dpr='3'] .lineheight48 {
   line-height: 72px;
+}
+
+[data-dpr='1'] .lineheight53 {
+  line-height: 26.5px;
+}
+
+[data-dpr='2'] .lineheight53 {
+  line-height: 53px;
+}
+
+[data-dpr='3'] .lineheight53 {
+  line-height: 79.5px;
 }
 
 [data-dpr='1'] .lineheight56 {

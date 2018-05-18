@@ -36,9 +36,11 @@ export default {
     // 调用System插件,由于需要等待deviceready事件，此处$System为一个Promise对象
     this.$System.then(system => {
       // 此处的system即为注入的插件对象，之后直接调用方法即可
-      system.getDeviceInfo(str => {
-        console.log(str)
-      })
+      if (system) {
+        system.getDeviceInfo(str => {
+          console.log(str)
+        })
+      }
     })
   }
 }
