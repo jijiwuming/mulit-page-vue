@@ -4,25 +4,14 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-src/*
+src/components
+!/src/components/better-scroll-vue
+!src/components/*.vue
+src/modules
+!/src/modules/example
+src/resources
 static/*
 !/static/css/public.css
-!/src/modules
-/src/modules/addSearchName
-/src/modules/linedetail
-/src/modules/routePlan
-/src/modules/searchCar
-/src/modules/searchstation
-/src/modules/site-details
-/src/modules/ticket-detail
-/src/modules/toPay
-
-!/src/components
-/src/components/better-scroll
-/src/components/ticket_background
-/src/components/Error.vue
-/src/components/ticket-mark.vue
-!/src/plugins
 
 # Editor directories and files
 .idea
