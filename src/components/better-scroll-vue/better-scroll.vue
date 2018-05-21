@@ -20,7 +20,7 @@
       <div v-show="showPullUpTip">
         <div class="better-scroll-list-pull-up">
           <template v-if="pullUpState === 1">
-            <slot name="pull-up-stage1">加栽中</slot>
+            <slot name="pull-up-stage1">加载中</slot>
           </template>
           <template v-else-if="pullUpState === 2">
             <slot name="pull-up-stage2">已加载全部</slot>
