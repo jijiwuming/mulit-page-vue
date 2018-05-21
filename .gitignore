@@ -8,6 +8,11 @@ src/*
 static/*
 !/static/css/public.css
 !/src/modules/example
+!/src/components
+/src/components/better-scroll
+/src/components/ticket_background
+/src/components/Error.vue
+/src/components/ticket-mark.vue
 !/src/plugins
 
 # Editor directories and files
