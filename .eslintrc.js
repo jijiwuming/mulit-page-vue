@@ -21,6 +21,7 @@ module.exports = {
   rules: {
     // 函数定义时括号前面要不要有空格
     'space-before-function-paren': [0, 'always'],
+    strict: 2,
     // allow async-await
     'generator-star-spacing': 'off',
     // allow debugger during development

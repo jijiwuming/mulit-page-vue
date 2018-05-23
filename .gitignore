@@ -7,6 +7,7 @@ yarn-error.log*
 src/*
 static/*
 !/static/css/public.css
+!/static/README.md
 !/src/modules
 /src/modules/addSearchName
 /src/modules/linedetail
@@ -15,6 +16,7 @@ static/*
 /src/modules/searchstation
 /src/modules/site-details
 /src/modules/ticket-detail
+/src/modules/ticketDetail
 /src/modules/toPay
 
 !/src/components

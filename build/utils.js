@@ -26,7 +26,8 @@ exports.entries = function() {
       subPath.lastIndexOf('/') + 1,
       filePath.lastIndexOf('/')
     )
-    map[filename] = filePath
+    let arr = ['babel-polyfill', filePath]
+    map[filename] = arr
   })
   return map
 }

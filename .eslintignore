@@ -5,6 +5,6 @@ src/components/
 src/modules/example/
 src/modules/linedetail/
 src/modules/searchstation/
-src/modules/ticket-detail/
+src/modules/ticketDetail/
 src/modules/searchCar/
 src/modules/addSearchName/
