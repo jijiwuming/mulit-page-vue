@@ -15,6 +15,7 @@ static/*
 /src/modules/searchCar
 /src/modules/searchstation
 /src/modules/site-details
+/src/modules/siteDetails
 /src/modules/ticket-detail
 /src/modules/ticketDetail
 /src/modules/toPay
