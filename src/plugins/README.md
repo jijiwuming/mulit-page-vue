@@ -54,6 +54,8 @@ export default {
 
 * 目前仅转入 cordova 的 android 下 system/thirdparty/toast/ui 插件
 
+* 添加对 Cordova 的 resume 和 pause 事件监听，调用 callBackViewState，传参分别为 3 和 2
+
 ## TODO
 
 * 其他原生插件的加入

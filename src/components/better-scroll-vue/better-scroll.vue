@@ -10,7 +10,7 @@
             <slot name="pull-down-stage2">释放刷新</slot>
           </template>
           <template v-else-if="pullDownState === 3">
-            <slot name="pull-down-stage3">加载中</slot>
+            <slot name="pull-down-stage3">刷新中...</slot>
           </template>
         </div>
       </div>
@@ -94,56 +94,60 @@ export default {
   methods: {
     // 创建实例
     initBsScroll() {
-      if (!this.$refs.betterScrollListWrapper) {
+      let self = this
+      if (!self.$refs.betterScrollListWrapper) {
         return
       }
       // 配置BScroll参数
-      this.bsscroll = new BScroll(this.$refs.betterScrollListWrapper, {
-        probeType: this.config.probeType,
-        click: this.config.click,
-        scrollY: this.config.scrollY,
+      self.bsscroll = new BScroll(self.$refs.betterScrollListWrapper, {
+        probeType: self.config.probeType,
+        click: self.config.click,
+        scrollY: self.config.scrollY,
         pullDownRefresh: {
-          threshold: this.config.pullDownSize,
+          threshold: self.config.pullDownSize,
           stop: 0
         },
         pullUpLoad: {
-          threshold: this.config.pullUpSize
+          threshold: self.config.pullUpSize
         }
       })
       // TODO: 此处为便于观察设置，后续去除
-      window.bsscroll = this.bsscroll
+      window.bsscroll = self.bsscroll
       // 是否派发滚动事件
-      if (this.config.listenScroll) {
-        this.bsscroll.on('scroll', pos => {
-          if (this.config.pulldown) {
-            let oldState = this.pullDownState
-            if (pos.y > 0) this.showPullDownTip = true
+      if (self.config.listenScroll) {
+        self.bsscroll.on('scroll', pos => {
+          if (self.config.pulldown) {
+            let oldState = self.pullDownState
+            if (pos.y > 0) self.showPullDownTip = true
             if (oldState < 3) {
-              if (pos.y > 0 && pos.y < this.config.pullDownSize) {
-                this.pullDownState = 1
+              if (pos.y > 0 && pos.y < self.config.pullDownSize) {
+                self.pullDownState = 1
               }
-              if (pos.y >= this.config.pullDownSize) {
-                this.pullDownState = 2
+              if (pos.y >= self.config.pullDownSize) {
+                self.pullDownState = 2
               }
             }
           }
           // 重置下拉的显示
           if (pos.y <= 0) {
-            this.pullDownState = 1
-            this.showPullDownTip = false
+            self.pullDownState = 1
+            self.showPullDownTip = false
           }
-          this.$emit('scroll', pos)
+          self.$emit('scroll', pos)
         })
       }
       // 配置首次加载数据
-      if (this.config.loadFirstPage) {
+      if (self.config.loadFirstPage) {
         // 派发首页加载事件
-        this.$emit('loadFirstPage', this.PromiseLoadFirstPage())
+        setTimeout(function() {
+          self.$emit('loadFirstPage', self.PromiseLoadFirstPage())
+        }, self.config.loadReadyTime)
       }
       // 是否派发滚动到底部事件，用于上拉加载
-      if (this.config.pullup) {
-        this.bsscroll.on('pullingUp', () => {
-          this.PromisePullUp()
+      if (self.config.pullup) {
+        self.bsscroll.on('pullingUp', () => {
+          self
+            .PromisePullUp()
             .then(() => {
               // 调用上拉加载
             })
@@ -152,12 +156,13 @@ export default {
             })
         })
       } else {
-        this.bsscroll && this.bsscroll.closePullUp()
+        self.bsscroll && self.bsscroll.closePullUp()
       }
       // 是否派发顶部下拉事件，用于下拉刷新
-      if (this.config.pulldown) {
-        this.bsscroll.on('pullingDown', () => {
-          this.PromisePullDown()
+      if (self.config.pulldown) {
+        self.bsscroll.on('pullingDown', () => {
+          self
+            .PromisePullDown()
             .then(() => {
               // 调用下拉刷新
             })
@@ -166,55 +171,56 @@ export default {
             })
         })
       } else {
-        this.bsscroll && this.bsscroll.closePullDown()
+        self.bsscroll && self.bsscroll.closePullDown()
       }
     },
     // 承诺首页加载
     PromiseLoadFirstPage() {
-      if (this.config.pulldown && this.config.programTipLoad) {
+      let self = this
+      if (self.config.pulldown && self.config.programTipLoad) {
         // 下拉加载首页
-        return this.reloadPullDown()
-      } else if (this.config.pullup && this.config.programTipLoad) {
+        return self.reloadPullDown()
+      } else if (self.config.pullup && self.config.programTipLoad) {
         // 上拉加载首页
-        return this.loadPullUp()
+        return self.loadPullUp()
       } else {
-        return new Promise((resolve, reject) => {
-          this.config.loadDataFunc(1, this.config.pageSize).finally(() => {
-            this.refresh()
-          })
+        // 无显示tip加载
+        return self.config.loadDataFunc(1, self.config.pageSize).finally(() => {
+          self.refresh()
         })
       }
     },
     // 承诺下拉刷新
     PromisePullDown() {
+      let self = this
       return new Promise((resolve, reject) => {
-        if (this.config.pulldown) {
-          if (!this.pullDownLoad) {
+        if (self.config.pulldown) {
+          if (!self.pullDownLoad) {
             // 关闭上拉
-            this.closePullUp()
+            self.closePullUp()
             // 下拉动作
-            this.pullDownLoad = true
-            this.pullDownState = 3
-            this.config
-              .loadDataFunc(1, this.config.pageSize)
+            self.pullDownLoad = true
+            self.pullDownState = 3
+            self.config
+              .loadDataFunc(1, self.config.pageSize)
               .finally(() => {
-                this.endPullDownload()
+                self.endPullDownload()
               })
               .then(({ length }) => {
-                this.allcount = length ? length : 0
-                if (length && this.allcount <= this.data.length) {
+                self.allcount = length ? length : 0
+                if (length && self.allcount <= self.data.length) {
                   // 上拉数据显示
-                  this.showPullUpTip = true
-                  this.pullUpState = 2
+                  self.showPullUpTip = true
+                  self.pullUpState = 2
                 } else {
                   // 消除上拉的区域样式
-                  this.showPullUpTip = false
-                  this.pullUpState = 1
+                  self.showPullUpTip = false
+                  self.pullUpState = 1
                 }
               })
             resolve()
           } else {
-            this.bsscroll.finishPullDown()
+            self.bsscroll.finishPullDown()
           }
         }
         reject()
@@ -222,32 +228,33 @@ export default {
     },
     // 承诺上拉加载
     PromisePullUp() {
+      let self = this
       return new Promise((resolve, reject) => {
-        if (this.config.pullup) {
-          if (!this.pullUpLoad && this.pullUpState < 2) {
+        if (self.config.pullup) {
+          if (!self.pullUpLoad && self.pullUpState < 2) {
             // 关闭下拉
-            this.closePullDown()
+            self.closePullDown()
             // 上拉动作
-            this.pullUpLoad = true
-            this.showPullUpTip = true
+            self.pullUpLoad = true
+            self.showPullUpTip = true
             let pageIndex =
-              Math.floor(this.data.length / this.config.pageSize) + 1
-            this.config
-              .loadDataFunc(pageIndex, this.config.pageSize)
+              Math.floor(self.data.length / self.config.pageSize) + 1
+            self.config
+              .loadDataFunc(pageIndex, self.config.pageSize)
               .finally(() => {
-                this.endPullUpload()
+                self.endPullUpload()
               })
               .then(({ length }) => {
-                this.allcount = length ? length : 0
+                self.allcount = length ? length : 0
                 // 超过数量时
-                if (length && this.allcount <= this.data.length) {
-                  this.pullUpState = 2
-                  this.showPullUpTip = true
+                if (length && self.allcount <= self.data.length) {
+                  self.pullUpState = 2
+                  self.showPullUpTip = true
                 }
               })
             resolve()
           } else {
-            this.bsscroll.finishPullUp()
+            self.bsscroll.finishPullUp()
           }
         }
         reject()
@@ -255,29 +262,31 @@ export default {
     },
     // 下拉刷新方法
     reloadPullDown() {
-      if (this.config.pulldown) {
-        if (this.config.programTipLoad) {
-          this.scrollTo(
+      let self = this
+      if (self.config.pulldown) {
+        if (self.config.programTipLoad) {
+          self.scrollTo(
             0,
-            this.config.pullDownSize + 1,
-            this.config.loadReadyTime,
+            self.config.pullDownSize + 1,
+            self.config.loadReadyTime,
             'swipe'
           )
         }
         // 使得代码调用时一直显示加载中
         setTimeout(() => {
-          this.pullDownState = 3
+          self.pullDownState = 3
         }, 0)
         return new Promise((resolve, reject) => {
           setTimeout(() => {
-            this.PromisePullDown()
+            self
+              .PromisePullDown()
               .then(() => {
                 resolve()
               })
               .catch(err => {
                 reject(err)
               })
-          }, this.config.loadReadyTime)
+          }, self.config.loadReadyTime)
         })
       } else {
         return Promise.reject('设置不允许下拉')
@@ -285,25 +294,27 @@ export default {
     },
     // 上拉加载方法
     loadPullUp() {
-      if (this.config.pullup) {
-        if (this.config.programTipLoad) {
-          this.scrollTo(
+      let self = this
+      if (self.config.pullup) {
+        if (self.config.programTipLoad) {
+          self.scrollTo(
             0,
-            this.bsscroll.maxScrollY + this.config.pullUpSize - 1,
-            this.config.loadReadyTime,
+            self.bsscroll.maxScrollY + self.config.pullUpSize - 1,
+            self.config.loadReadyTime,
             'swipe'
           )
         }
         return new Promise((resolve, reject) => {
           setTimeout(() => {
-            this.PromisePullUp()
+            self
+              .PromisePullUp()
               .then(() => {
                 resolve()
               })
               .catch(err => {
                 reject(err)
               })
-          }, this.config.loadReadyTime)
+          }, self.config.loadReadyTime)
         })
       } else {
         return Promise.reject('设置不允许上拉')
@@ -311,75 +322,87 @@ export default {
     },
     // 结束上拉
     endPullUpload() {
+      let self = this
       // 开启下拉
-      this.openPullDown()
+      self.openPullDown()
       // 结束上拉动作
-      this.showPullUpTip = false
-      this.bsscroll.finishPullUp()
-      this.refresh()
-      this.pullUpLoad = false
+      self.showPullUpTip = false
+      self.bsscroll.finishPullUp()
+      self.refresh()
+      self.pullUpLoad = false
     },
     // 结束下拉
     endPullDownload() {
+      let self = this
       // 开启上拉
-      this.openPullUp()
+      self.openPullUp()
       // 结束下拉动作
-      this.showPullDownTip = false
-      this.showPullUpTip = false
-      this.bsscroll.finishPullDown()
-      this.refresh()
-      this.pullDownLoad = false
+      self.showPullDownTip = false
+      self.showPullUpTip = false
+      self.bsscroll.finishPullDown()
+      self.refresh()
+      self.pullDownLoad = false
     },
     // 关闭上拉
     closePullUp() {
-      this.config.pullup && this.bsscroll && this.bsscroll.closePullUp()
+      let self = this
+      self.config.pullup && self.bsscroll && self.bsscroll.closePullUp()
     },
     // 开启上拉
     openPullUp() {
-      this.config.pullup &&
-        this.bsscroll &&
-        this.bsscroll.openPullUp({
-          threshold: this.config.pullUpSize
+      let self = this
+      self.config.pullup &&
+        self.bsscroll &&
+        self.bsscroll.openPullUp({
+          threshold: self.config.pullUpSize
         })
     },
     // 关闭下拉
     closePullDown() {
-      this.config.pulldown && this.bsscroll && this.bsscroll.closePullDown()
+      let self = this
+      self.config.pulldown && self.bsscroll && self.bsscroll.closePullDown()
     },
     // 开启下拉
     openPullDown() {
-      this.config.pulldown &&
-        this.bsscroll &&
-        this.bsscroll.openPullDown({
-          threshold: this.config.pullDownSize,
+      let self = this
+      self.config.pulldown &&
+        self.bsscroll &&
+        self.bsscroll.openPullDown({
+          threshold: self.config.pullDownSize,
           stop: 0
         })
     },
     // 销毁
     destroy() {
-      this.bsscroll && this.bsscroll.destroy()
-      this.bsscroll = null
+      let self = this
+      self.bsscroll && self.bsscroll.destroy()
+      self.bsscroll = null
     },
     // 代理better-scroll的disable方法
     disable() {
-      this.bsscroll && this.bsscroll.disable()
+      let self = this
+      self.bsscroll && self.bsscroll.disable()
     },
     // 代理better-scroll的enable方法
     enable() {
-      this.bsscroll && this.bsscroll.enable()
+      let self = this
+      self.bsscroll && self.bsscroll.enable()
     },
     // 代理better-bsscroll的refresh方法
     refresh() {
-      this.bsscroll && this.bsscroll.refresh()
+      let self = this
+      self.bsscroll && self.bsscroll.refresh()
     },
     // 代理better-scroll的scrollTo方法
     scrollTo() {
-      this.bsscroll && this.bsscroll.scrollTo.apply(this.bsscroll, arguments)
+      let self = this
+      self.bsscroll && self.bsscroll.scrollTo.apply(self.bsscroll, arguments)
     },
     // 代理better-scroll的scrollToElement方法
     scrollToElement() {
-      this.bsscroll &&
-        this.bsscroll.scrollToElement.apply(this.bsscroll, arguments)
+      let self = this
+      self.bsscroll &&
+        self.bsscroll.scrollToElement.apply(self.bsscroll, arguments)
     }
   }
 }
@@ -407,6 +430,7 @@ export default {
 .better-scroll-list-pull-down {
   width: 100%;
   display: flex;
+  height: 80px;
   justify-content: center;
   align-items: center;
 }
@@ -414,6 +438,7 @@ export default {
 .better-scroll-list-pull-up {
   width: 100%;
   display: flex;
+  height: 50px;
   justify-content: center;
   align-items: center;
 }

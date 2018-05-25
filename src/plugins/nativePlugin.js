@@ -9,6 +9,20 @@ import BarcodeScanner from './cordova/android/barcodescanner'
 
 let nativeAPIPlugin = {}
 /**
+ * resume事件回调
+ *
+ */
+function onResume() {
+  window.callBackViewState(3)
+}
+/**
+ * pause事件回调
+ *
+ */
+function onPause() {
+  window.callBackViewState(2)
+}
+/**
  * 获取设备事件
  *
  * @param {Boolean} isCordova 是否cordova平台
@@ -20,8 +34,11 @@ function getDeviceReady(isCordova) {
       // cordova 平台
       document.addEventListener(
         'deviceready',
-        function () {
+        function() {
           console.log('deviceready')
+          // 添加事件回调
+          document.addEventListener('resume', onResume, false)
+          document.addEventListener('pause', onPause, false)
           resolve()
         },
         false
@@ -34,7 +51,7 @@ function getDeviceReady(isCordova) {
   }
 }
 // 插件使用
-nativeAPIPlugin.install = function (Vue, options) {
+nativeAPIPlugin.install = function(Vue, options) {
   // true为cordova，false为H5，H5接口暂时留空
   let plat = options.platform
   if (plat) {
@@ -65,7 +82,9 @@ nativeAPIPlugin.install = function (Vue, options) {
     })
     Vue.prototype.$BarcodeScanner = deviceReadyEvent.then(() => {
       let barcodescanner = new BarcodeScanner()
-      return barcodescanner instanceof BarcodeScanner ? barcodescanner : undefined
+      return barcodescanner instanceof BarcodeScanner
+        ? barcodescanner
+        : undefined
     })
   }
 }
