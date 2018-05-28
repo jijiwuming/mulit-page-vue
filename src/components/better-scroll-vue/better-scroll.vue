@@ -148,9 +148,14 @@ export default {
         self.bsscroll.on('pullingUp', () => {
           self
             .PromisePullUp()
-            .then(() => {
-              // 调用上拉加载
-            })
+            .then(
+              () => {
+                // 调用上拉加载
+              },
+              () => {
+                // 到底了
+              }
+            )
             .catch(err => {
               console.dir(err)
             })
@@ -185,9 +190,23 @@ export default {
         return self.loadPullUp()
       } else {
         // 无显示tip加载
-        return self.config.loadDataFunc(1, self.config.pageSize).finally(() => {
-          self.refresh()
-        })
+        return self.config
+          .loadDataFunc(1, self.config.pageSize)
+          .finally(() => {
+            self.refresh()
+          })
+          .then(({ length }) => {
+            self.allcount = length ? length : 0
+            if (length && self.allcount <= self.data.length) {
+              // 上拉数据显示
+              self.showPullUpTip = true
+              self.pullUpState = 2
+            } else {
+              // 消除上拉的区域样式
+              self.showPullUpTip = false
+              self.pullUpState = 1
+            }
+          })
       }
     },
     // 承诺下拉刷新

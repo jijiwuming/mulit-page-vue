@@ -10,6 +10,7 @@ static/*
 !/static/README.md
 !/src/modules
 /src/modules/addSearchName
+/src/modules/correction
 /src/modules/linedetail
 /src/modules/routePlan
 /src/modules/searchCar
