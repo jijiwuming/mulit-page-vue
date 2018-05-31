@@ -9,20 +9,6 @@ import BarcodeScanner from './cordova/android/barcodescanner'
 
 let nativeAPIPlugin = {}
 /**
- * resume事件回调
- *
- */
-function onResume() {
-  window.callBackViewState(3)
-}
-/**
- * pause事件回调
- *
- */
-function onPause() {
-  window.callBackViewState(2)
-}
-/**
  * 获取设备事件
  *
  * @param {Boolean} isCordova 是否cordova平台
@@ -37,8 +23,20 @@ function getDeviceReady(isCordova) {
         function() {
           console.log('deviceready')
           // 添加事件回调
-          document.addEventListener('resume', onResume, false)
-          document.addEventListener('pause', onPause, false)
+          document.addEventListener(
+            'resume',
+            () => {
+              if (window.onResume) window.onResume()
+            },
+            false
+          )
+          document.addEventListener(
+            'pause',
+            () => {
+              if (window.onPause) window.onPause()
+            },
+            false
+          )
           resolve()
         },
         false

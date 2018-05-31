@@ -8,7 +8,7 @@
       <span slot="pull-down-stage2">well,you can release now</span>
       <!-- 加载阶段内容 -->
       <span slot="pull-down-stage3">loading</span>
-      <div v-for="(item,index) in list" :key="index" class="example-list-item">{{item}}</div>
+      <div v-for="(item,index) in list" :key="index" class="example-list-item" @click="deleteIt(item)">{{item}}</div>
       <!-- 上拉加载中 -->
       <span slot="pull-up-stage1">loading</span>
       <!-- 全部加载完成 -->
@@ -46,6 +46,9 @@ export default {
         if (pageIndex === 1) {
           this.list = res.list
         } else {
+          let startSize = (pageIndex - 1) * pageSize
+          let deletelength = this.list.length - startSize
+          this.list.splice(startSize, deletelength)
           this.list = this.list.concat(res.list)
         }
         // 返回的promise必须传递一个带length属性的对象，length为总共拥有的数据长度
@@ -53,12 +56,20 @@ export default {
           length: res.length
         }
       })
+    },
+    deleteIt(item) {
+      this.list.splice(this.list.findIndex(i => i === item), 1)
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
+html,
+body,
+#app {
+  height: 100%;
+}
 .hello {
   height: 100%;
 }

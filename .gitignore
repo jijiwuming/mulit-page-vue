@@ -11,7 +11,10 @@ static/*
 !/src/modules
 /src/modules/addSearchName
 /src/modules/correction
+src/modules/collection/
 /src/modules/linedetail
+src/modules/line/
+src/modules/routeDetails/
 /src/modules/routePlan
 /src/modules/searchCar
 /src/modules/searchstation
@@ -25,6 +28,7 @@ static/*
 /src/components/better-scroll
 /src/components/ticket_background
 /src/components/Error.vue
+/src/components/mySwiper
 /src/components/ticket-mark.vue
 
 !/src/plugins

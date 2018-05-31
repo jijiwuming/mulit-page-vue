@@ -2,7 +2,10 @@
 /config/**
 /dist/**
 src/components/
+src/modules/collection/
 src/modules/example/
+src/modules/line/
+src/modules/routeDetails/
 src/modules/linedetail/
 src/modules/searchstation/
 src/modules/ticketDetail/

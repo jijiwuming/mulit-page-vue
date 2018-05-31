@@ -176,6 +176,7 @@ export default class System {
       callback
     )
   }
+
   /**
    * 取消Push监听事件
    *
@@ -189,6 +190,79 @@ export default class System {
       successCallback,
       errorCallback,
       messageId
+    )
+  }
+
+  /**
+   * @typedef {OssFile} 单个文件对象
+   * @property {string} filePath 文件本地路径，如'/storage/emulated/0/Boohee/20170628nYafd3YTpW.png'
+   * @property {string} ossPath 文件OSS路径，如'jhx/user/image/wrq_zj/20170628nYafd3YTpW.png'
+   */
+  /**
+   * @typedef {FileReq} 上传的请求对象
+   * @property {string} bucket OSS容器id，如'xb-image'
+   * @property {string} endpoint 节点名，如'oss-cn-qingdao.aliyuncs.com'
+   * @property {string} ossFolder oss文件夹，如'jhx/user/image/wrq_zj/'
+   * @property {Array<OssFile>} files 文件对象数组
+   */
+  /**
+   * 文件上传
+   *
+   * @param {FileReq} [{
+   *       bucket = 'xb-image',
+   *       endpoint = 'oss-cn-qingdao.aliyuncs.com',
+   *       ossPath,
+   *       files
+   *     }={}] 上传的请求对象
+   * @param {function(Array)} successCallback 成功回调
+   * @param {Function} errorCallback 失败回调
+   * @memberof System
+   */
+  uploadFiles(
+    {
+      bucket = 'xb-image',
+      endpoint = 'oss-cn-qingdao.aliyuncs.com',
+      ossPath = '',
+      files
+    } = {},
+    successCallback,
+    errorCallback
+  ) {
+    let req = {
+      bucket,
+      endpoint,
+      ossPath,
+      files
+    }
+    window.x_system.uploadFiles(
+      ops => {
+        console.log('ops:')
+        console.dir(ops)
+        let arr = []
+        for (let item of req.files) {
+          arr.push(`http://${req.bucket}.${req.endpoint}/${item.ossPath}`)
+        }
+        successCallback(arr)
+      },
+      errorCallback,
+      JSON.stringify(req)
+    )
+  }
+  /**
+   * 选定视屏区域内拍照
+   *
+   * @param {any} width 拍照区域宽度
+   * @param {any} height 拍照区域高度
+   * @param {function(Array)} successCallback 成功回调(文件路径数组)
+   * @param {Function} failureCallback 失败回调
+   * @memberof System
+   */
+  takePhotoByArea(width, height, successCallback, failureCallback) {
+    window.x_system.takePhotoByArea(
+      successCallback,
+      failureCallback,
+      width,
+      height
     )
   }
 }

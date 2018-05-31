@@ -46,6 +46,22 @@ export default {
 }
 ```
 
+## Tips
+
+```javascript
+// 已经加入了onResume和onPause方法的监听
+// 使用时只需先引入本插件，然后添加window.onResume和window.onPause方法即可在之后每次触发事件时调用
+// 如下：
+
+// any.js
+window.onResume = () => {
+  // to do anything you want
+}
+window.onPause = () => {
+  // to do anything you want
+}
+```
+
 ## DONE
 
 * vue 插件化
