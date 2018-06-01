@@ -123,4 +123,15 @@ export default class Thirdparty {
       latitude
     )
   }
+  /**
+   * 
+   * 
+   * @param {Function} successCallback 成功回调
+   * @param {Function} failureCallback 失败回调
+   * @param {String} adChannelId 广告位ID
+   * @memberof Thirdparty
+   */
+  getAdInfo(successCallback, failureCallback, adChannelId) {
+    window.x_thirdparty.getAdInfo(successCallback, failureCallback, adChannelId);
+  }
 }

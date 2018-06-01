@@ -1,4 +1,3 @@
-'use strict'
 require('babel-polyfill')
 const path = require('path')
 const utils = require('./utils')
@@ -50,6 +49,8 @@ module.exports = {
         test: /\.js$/,
         loader: 'babel-loader',
         include: [
+          resolve('node_modules/dom7'),
+          resolve('node_modules/swiper'),
           resolve('src'),
           resolve('test'),
           resolve('node_modules/webpack-dev-server/client')
