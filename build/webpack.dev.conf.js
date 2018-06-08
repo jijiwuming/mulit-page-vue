@@ -1,4 +1,3 @@
-'use strict'
 const utils = require('./utils')
 const webpack = require('webpack')
 const config = require('../config')
@@ -6,14 +5,14 @@ const merge = require('webpack-merge')
 const path = require('path')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+// const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
-
 const devWebpackConfig = merge(baseWebpackConfig, {
+  entry: utils.devEntries(),
   module: {
     rules: utils.styleLoaders({
       sourceMap: config.dev.cssSourceMap,
@@ -72,35 +71,44 @@ const devWebpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       }
     ])
-  ].concat(utils.htmlPlugin())
+  ]
 })
 
-module.exports = new Promise((resolve, reject) => {
-  portfinder.basePort = process.env.PORT || config.dev.port
-  portfinder.getPort((err, port) => {
-    if (err) {
-      reject(err)
-    } else {
-      // publish the new Port, necessary for e2e tests
-      process.env.PORT = port
-      // add port to devServer config
-      devWebpackConfig.devServer.port = port
-      let urls = Object.keys(utils.entries())
-        .map(i => `http://${devWebpackConfig.devServer.host}:${port}/${i}.html`)
-        .join('\n\r')
-      // Add FriendlyErrorsPlugin
-      devWebpackConfig.plugins.push(
-        new FriendlyErrorsPlugin({
-          compilationSuccessInfo: {
-            messages: [`Your application urls is running here: \n\r${urls}`]
-          },
-          onErrors: config.dev.notifyOnErrors
-            ? utils.createNotifierCallback()
-            : undefined
-        })
-      )
+module.exports = env => {
+  return new Promise((resolve, reject) => {
+    portfinder.basePort = process.env.PORT || config.dev.port
+    portfinder.getPort((err, port) => {
+      if (err) {
+        reject(err)
+      } else {
+        // publish the new Port, necessary for e2e tests
+        process.env.PORT = port
+        // add port to devServer config
+        devWebpackConfig.devServer.port = port
+        let envModule = env && env.module ? env.module : false
+        devWebpackConfig.plugins = devWebpackConfig.plugins.concat(
+          utils.devHtmlPlugin(envModule)
+        )
+        devWebpackConfig.entry = utils.devEntries(envModule)
+        let urls = Object.keys(utils.devEntries(envModule))
+          .map(
+            i => `http://${devWebpackConfig.devServer.host}:${port}/${i}.html`
+          )
+          .join('\n\r')
+        // Add FriendlyErrorsPlugin
+        devWebpackConfig.plugins.push(
+          new FriendlyErrorsPlugin({
+            compilationSuccessInfo: {
+              messages: [`Your application urls is running here: \n\r${urls}`]
+            },
+            onErrors: config.dev.notifyOnErrors
+              ? utils.createNotifierCallback()
+              : undefined
+          })
+        )
 
-      resolve(devWebpackConfig)
-    }
+        resolve(devWebpackConfig)
+      }
+    })
   })
-})
+}

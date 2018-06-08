@@ -6,8 +6,8 @@
 
 ## 膜改参考 https://www.jianshu.com/p/0a30aca71b16
 
-* 添加了 px2rem-loader,设置了 remunit 为 75
-* 页面请添加在 modules 底下，详见 modules 下 readme
+- 添加了 px2rem-loader,设置了 remunit 为 75
+- 页面请添加在 modules 底下，详见 modules 下 readme
 
 ### 更新靠缘分，维护看心情，欢迎提 issue，心急请慎用
 
@@ -17,8 +17,12 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8080
+# serve all module with hot reload at localhost:8080
 npm run dev
+
+# serve single module with hot reload at localhost:8080
+
+npm run dev -- --env.module=moduleName
 
 # build for production with minification
 npm run build

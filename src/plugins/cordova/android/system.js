@@ -265,4 +265,28 @@ export default class System {
       height
     )
   }
+  /**
+   * 打开线路详情地图
+   * @param lineId 线路id(必填)
+   * @param direction 线路方向，1上行2下行(必填)
+   * @param unifiedId 站点id，默认选择的站点id(必填)
+   * @param {Function} successCallback 成功回调
+   * @param {Function} failureCallback 失败回调
+   */
+  openBusLineMap(
+    lineId,
+    direction,
+    unifiedId,
+    successCallback,
+    failureCallback
+  ) {
+    window.x_system.openBusLineMap(
+      successCallback,
+      failureCallback,
+      lineId,
+      direction,
+      unifiedId
+    )
+    console.log('调用')
+  }
 }

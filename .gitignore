@@ -9,19 +9,20 @@ static/*
 !/static/css/public.css
 !/static/README.md
 !/src/modules
+/src/modules/add_search_name
 /src/modules/addSearchName
 /src/modules/correction
 src/modules/collection/
-/src/modules/linedetail
+/src/modules/lineDetails
 src/modules/line/
 src/modules/routeDetails/
 /src/modules/routePlan
+/src/modules/search
 /src/modules/searchCar
 /src/modules/searchstation
 /src/modules/site-details
 /src/modules/siteDetails
-/src/modules/ticket-detail
-/src/modules/ticketDetail
+/src/modules/TicketDetails
 /src/modules/toPay
 
 !/src/components
@@ -30,6 +31,7 @@ src/modules/routeDetails/
 /src/components/Error.vue
 /src/components/mySwiper
 /src/components/ticket-mark.vue
+/src/components/banner-vue/*
 
 !/src/plugins
 

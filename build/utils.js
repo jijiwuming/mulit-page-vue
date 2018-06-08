@@ -1,4 +1,3 @@
-'use strict'
 const path = require('path')
 // glob是webpack安装时依赖的一个第三方模块，还模块允许你使用 *等符号, 例如lib/*.js就是获取lib文件夹下的所有js后缀名的文件
 const glob = require('glob')
@@ -19,6 +18,22 @@ const packageConfig = require('../package.json')
 // 那么就作为入口处理
 exports.entries = function() {
   let entryFiles = glob.sync(MOUDLES_PATH + '/*/main.js')
+  let map = {}
+  entryFiles.forEach(filePath => {
+    let subPath = filePath.substring(0, filePath.lastIndexOf('/'))
+    let filename = filePath.substring(
+      subPath.lastIndexOf('/') + 1,
+      filePath.lastIndexOf('/')
+    )
+    let arr = ['babel-polyfill', filePath]
+    map[filename] = arr
+  })
+  return map
+}
+// dev单模块js编译加载
+exports.devEntries = function(modulename) {
+  let path = modulename || '*'
+  let entryFiles = glob.sync(MOUDLES_PATH + `/${path}/main.js`)
   let map = {}
   entryFiles.forEach(filePath => {
     let subPath = filePath.substring(0, filePath.lastIndexOf('/'))
@@ -61,6 +76,30 @@ exports.htmlPlugin = function() {
         },
         chunksSortMode: 'dependency'
       })
+    }
+    arr.push(new HtmlWebpackPlugin(conf))
+  })
+  return arr
+}
+// dev单模块页面输出配置
+exports.devHtmlPlugin = function(modulename) {
+  let path = modulename || '*'
+  let entryHtml = glob.sync(MOUDLES_PATH + `/${path}/index.html`)
+  let arr = []
+  entryHtml.forEach(filePath => {
+    let subPath = filePath.substring(0, filePath.lastIndexOf('/'))
+    let filename = filePath.substring(
+      subPath.lastIndexOf('/') + 1,
+      filePath.lastIndexOf('/')
+    )
+    let conf = {
+      // 模板来源
+      template: filePath,
+      // 文件名称
+      filename: filename + '.html',
+      // 页面模板需要加对应的js脚本，如果不加这行则每个页面都会引入所有的js脚本
+      chunks: ['manifest', 'vendor', filename],
+      inject: true
     }
     arr.push(new HtmlWebpackPlugin(conf))
   })
